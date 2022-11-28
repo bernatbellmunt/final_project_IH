@@ -59,7 +59,7 @@ with methodology:
     st.write(taxi_data.head())
 
 with st.sidebar:
-
+# i will need to include the links to the different sections
     st.header("Welcome page")
     st.header("Methodology")
     st.header("Museum study")

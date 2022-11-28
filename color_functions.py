@@ -16,14 +16,16 @@ def study_image(img):
   return overlay_palette(img, color_palette)
 
 # function that extracts the color codes of the image - palette in codes
+#tolerance = group colors (0 does not group colors)
+# i want to get 10 colors max per painting
 def extract_colors(img):
   im = Image.open(img)
   tolerance = 32
-  limit = 24
-  colors, pixel_count = extcolors.extract_from_image(im, tolerance, limit)
+  limit = 10
+  colors = extcolors.extract_from_image(im, tolerance, limit)
   #I remove white, as it is the margin of the picture
   for e in colors:
-    if e[0] == (255, 255, 255):
+    if e == (255, 255, 255):
       colors.remove(e)
   return colors
 

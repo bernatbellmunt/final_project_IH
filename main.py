@@ -3,6 +3,8 @@ from PIL import Image
 import streamlit.components.v1 as components
 import codecs
 import os
+import sql.sql_queries as esecuele
+import color_functions
 
 #import sql.sql_queries 
 import pandas as pd
@@ -57,6 +59,12 @@ with methodology:
     st.text("This CSV file contains all the registers from El Prado, but I will create a second dataset for all oil paintings.")
     taxi_data = pd.read_csv("datasets/prado_oil.csv")
     st.write(taxi_data.head())
+
+
+#random_image= esecuele.get_random_in_years(1790,1800)
+#st.image(random_image, use_column_width=False)
+
+
 
 with st.sidebar:
 # i will need to include the links to the different sections

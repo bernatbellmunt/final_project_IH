@@ -2,8 +2,9 @@ import streamlit as st
 from PIL import Image
 import streamlit.components.v1 as components
 import codecs
-import sql.sql_connection
-import sql.sql_queries
+import os
+
+#import sql.sql_queries 
 import pandas as pd
 import numpy as np
 import color_functions

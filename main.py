@@ -5,12 +5,15 @@ import codecs
 import os
 import sql.sql_queries as esecuele
 import color_functions
+import seaborn as sns
+import matplotlib as plt
 
 #import sql.sql_queries 
 import pandas as pd
 import numpy as np
 import color_functions
 import webbrowser
+import time
 
 st.set_page_config(
      page_title="Prado Color Study",
@@ -32,6 +35,7 @@ header = st.container()
 subheader = st.container()
 methodology = st.container()
 dataset = st.container()
+museum_study = st.container()
 
 
 
@@ -61,25 +65,42 @@ with methodology:
     st.write(taxi_data.head())
 
 with dataset:
-    st.header("In this section we can find a random painting, either by artist, or by time period")
+    st.header("""Museum study""")
+    st.text("El Prado Museum has one of the largests collections of Barroque, meaning that most of the pieces of art where done \nduring the XVII century")
+    df=pd.read_csv("datasets/prado_oil.csv")
+
+    #fig = plt.figure(figsize=(10,10))
+    sns.histplot(x=df.year, bins=50, fill=None)
+    #st.pyplot(plt.gcf())
+with museum_study:
+    st.header("Oil Paintings study")
     tab1, tab2 = st.tabs(["🎨 Artist", "📆 Year Range"])
     with tab1:
         st.header("""Select your artist""")
         st.text("Select your artist to visualize a random painting and the palette used in the painting")
-
-        input_artist=st.text_input("Introduce artist name",value="",type="default",label_visibility="visible")
+        # too long - st.text(f"This are the possible artists: \n {color_functions.get_all_artists()}")
+        input_artist=st.text_input("Introduce artist name",value="Goya",type="default",label_visibility="visible")
         st.set_option('deprecation.showPyplotGlobalUse', False)
-        st.pyplot(color_functions.get_random_from_artist (input_artist), clear_figure=False, figsize = (10,10))
-        #st.text("Additionally, we can see the top 3 colors that are used by our artist")
+        obra = color_functions.get_random_from_artist(input_artist)
+        title=obra["title"]
+        st.text(title)
+        st.pyplot(color_functions.plot_image(obra), clear_figure=False)
+        st.text("Additionally, we can see the top 3 colors that are used by our artist")
+        st.image(color_functions.get_top3_artist(input_artist),use_column_width=False)
+
     with tab2:
         st.header("""Select your year range""")
         st.text("Enter the year range in the following input boxes:")
-        first=st.text_input("Introduce first year",value="",type="default",label_visibility="visible")
+        first=st.text_input("Introduce first year",value="1600",type="default",label_visibility="visible")
     
-        last=st.text_input("Introduce last year",value="",type="default",label_visibility="visible")
-        st.pyplot(color_functions.get_random_from_years (int(first), int(last)),figsize = (20,20))
-        #st.text("Additionally, we can see the top 3 colors that are used by our artist")
-    #st.pyplot(color_functions.get_top3_artist(input_artist), clear_figure=False)
+        last=st.text_input("Introduce last year",value="1610",type="default",label_visibility="visible")
+        obra2 = color_functions.get_random_from_years(int(first), int(last))
+        title2=obra2["title"]
+        artist2 = obra2["artist"]
+        st.text(f"{title2} \n {artist2}")
+        st.pyplot(color_functions.plot_image(obra2), clear_figure=False)
+        st.text("Additionally, we can see the top 3 colors are used during this time range:")
+        st.image(color_functions.get_top3_years(int(first), int(last)),use_column_width=False)
 
 
 

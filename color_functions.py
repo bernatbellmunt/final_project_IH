@@ -50,7 +50,7 @@ def overlay_palette(img, color_palette):
   img = Image.open(img)
   nrow = 2
   ncol = 1
-  f = plt.figure(figsize=(10,10), facecolor='None', edgecolor='k', dpi=55, num=None)
+  f = plt.figure(figsize=(20,20), facecolor='None', edgecolor='k', dpi=55, num=None)
   gs = gridspec.GridSpec(nrow, ncol, wspace=0.0, hspace=0.0) 
   f.add_subplot(2, 1, 1)
   plt.imshow(img, interpolation='nearest')
@@ -69,21 +69,29 @@ def study_col (col):
 def get_random_from_artist (artist):
     df=pd.read_csv("datasets/prado_oil.csv")
     artist = df.loc[df["artist"].str.contains(artist)]
-    artist = artist.sample()
-    column = artist["img_name"]
+    sam = artist.sample()
+    return sam
+
+
+def plot_image (sample): 
+    column = sample["img_name"]
     for cuadro in column:
         path = f"images/prado_paintings/{cuadro}"
         study_image(path)
+        
+def get_all_artists ():
+    df=pd.read_csv("datasets/prado_oil.csv")
+    artists = df["artist"].unique()
+    return artists
+        
 
 def get_random_from_years (first, last):
     df=pd.read_csv("datasets/prado_oil.csv")
     years = df.loc[df["year"]>first]
     years = df.loc[df["year"]<last]
-    years = years.sample()
-    column = years["img_name"]
-    for cuadro in column:
-        path = f"images/prado_paintings/{cuadro}"
-        study_image(path)
+    sam = years.sample()
+    return sam
+
 
     
 
@@ -165,3 +173,16 @@ def get_top3_artist (artist):
     lista_paleta = get_palette_list(column)
     main_colors = get_top3_colors(lista_paleta)
     return render_color_platte(main_colors)
+
+def get_top3_years (first, last):
+    df=pd.read_csv("datasets/prado_oil.csv")
+    df = df.loc[df["year"]>first]
+    df = df.loc[df["year"]<last]
+    column = df["img_name"]
+    lista_paleta = get_palette_list(column)
+    main_colors = get_top3_colors(lista_paleta)
+    return render_color_platte(main_colors)
+
+def get_all ():
+    df=pd.read_csv("datasets/prado_oil.csv")
+    return df

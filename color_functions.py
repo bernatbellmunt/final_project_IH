@@ -22,10 +22,10 @@ def extract_colors(img):
   im = Image.open(img)
   tolerance = 32
   limit = 10
-  colors = extcolors.extract_from_image(im, tolerance, limit)
+  colors, pixel_count = extcolors.extract_from_image(im, tolerance, limit)
   #I remove white, as it is the margin of the picture
   for e in colors:
-    if e == (255, 255, 255):
+    if e[0] == (255, 255, 255):
       colors.remove(e)
   return colors
 
@@ -61,6 +61,31 @@ def overlay_palette(img, color_palette):
   plt.subplots_adjust(wspace=0, hspace=0, bottom=0)
   plt.show(block=True)
 
+def study_col (col):
+    for cuadro in col:
+        path = f"images/prado_paintings/{cuadro}"
+        study_image(path)
+
+def get_random_from_artist (artist):
+    df=pd.read_csv("datasets/prado_oil.csv")
+    artist = df.loc[df["artist"].str.contains(artist)]
+    artist = artist.sample()
+    column = artist["img_name"]
+    for cuadro in column:
+        path = f"images/prado_paintings/{cuadro}"
+        study_image(path)
+
+def get_random_from_years (first, last):
+    df=pd.read_csv("datasets/prado_oil.csv")
+    years = df.loc[df["year"]>first]
+    years = df.loc[df["year"]<last]
+    years = years.sample()
+    column = years["img_name"]
+    for cuadro in column:
+        path = f"images/prado_paintings/{cuadro}"
+        study_image(path)
+
+    
 
 # given the column of img_names, it returns the palette list of all images
 def get_palette_list (col_images):
@@ -133,4 +158,10 @@ def get_all_color_codes (column):
     return all_col
         
 
-    
+def get_top3_artist (artist):
+    df=pd.read_csv("datasets/prado_oil.csv")
+    artist = df.loc[df["artist"].str.contains(artist)]
+    column = artist["img_name"]
+    lista_paleta = get_palette_list(column)
+    main_colors = get_top3_colors(lista_paleta)
+    return render_color_platte(main_colors)

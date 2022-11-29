@@ -129,3 +129,7 @@ dmypy.json
 .pyre/
 .DS_Store
 prova.ipynb
+scrape.ipynb
+scrape_styles.ipynb
+color_exploration.ipynb
+cleaning.ipynb

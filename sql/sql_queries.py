@@ -51,5 +51,7 @@ def get_random_in_years (first, last):
     FROM prado_paintings
     WHERE year between {first} and {last};"""
     df = pd.read_sql_query(query, engine)
-    
-    return df
+    sam=  df.sample()
+    pic = str(sam["img_name"])
+    path = f"images/prado_paintings/{pic}"
+    return color_functions.study_image(path)

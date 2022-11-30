@@ -25,7 +25,7 @@ def extract_colors(img):
   colors, pixel_count = extcolors.extract_from_image(im, tolerance, limit)
   #I remove white, as it is the margin of the picture
   for e in colors:
-    if e[0] == (255, 255, 255):
+    if e[0] == (255, 255, 255) or e[0] == (254, 255, 255) or e[0] == (255, 255, 253) or e[0]==(252, 255, 255):
       colors.remove(e)
   return colors
 
@@ -43,6 +43,7 @@ def render_color_platte(colors):
       y = int(math.floor(idx / columns) * size)
       canvas.rectangle([(x, y), (x + size - 1, y + size - 1)], fill=color[0])
   return result
+
 
 
 # groups image and color palette rectangle
@@ -87,7 +88,7 @@ def get_all_artists ():
 
 def get_random_from_years (first, last):
     df=pd.read_csv("datasets/prado_oil.csv")
-    years = df.loc[df["year"]>first]
+    years = df.loc[df["year"]>=first]
     years = df.loc[df["year"]<last]
     sam = years.sample()
     return sam
@@ -176,7 +177,7 @@ def get_top3_artist (artist):
 
 def get_top3_years (first, last):
     df=pd.read_csv("datasets/prado_oil.csv")
-    df = df.loc[df["year"]>first]
+    df = df.loc[df["year"]>=first]
     df = df.loc[df["year"]<last]
     column = df["img_name"]
     lista_paleta = get_palette_list(column)
@@ -186,3 +187,40 @@ def get_top3_years (first, last):
 def get_all ():
     df=pd.read_csv("datasets/prado_oil.csv")
     return df
+
+def return_main_color (year):
+    df=pd.read_csv("datasets/prado_oil.csv")
+    df = df.loc[df["year"]==year]
+    column = df["img_name"]
+    lista_paleta = get_palette_list(column)
+    topcolor= get_top_color(lista_paleta)
+    return topcolor[0]
+
+def get_top_color(palettelist):
+    all_color=[]
+    for palette in palettelist:
+        for color in palette:
+            all_color.append(color[0])
+    count1=0  
+    col1=()
+    for c in all_color:
+        curr_frequency = all_color.count(c)
+        if curr_frequency> count1:
+            count1 = curr_frequency
+            col1 = c
+    return (col1,count1)
+
+def return_main_color_artist (artist):
+    df=pd.read_csv("datasets/prado_oil.csv")
+    artist = df.loc[df["artist"].str.contains(artist)]
+    column = artist["img_name"]
+    lista_paleta = get_palette_list(column)
+    topcolor= get_top_color(lista_paleta)
+    return topcolor[0]
+
+def get_time_range(first, last):
+    x=[]
+    while first<last:
+        x.append(first)
+        first+=1
+    return x

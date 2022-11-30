@@ -85,12 +85,12 @@ with museum_study:
     
     fig.savefig("images/graph1.jpg")
     graph1 =  Image.open("images/graph1.jpg")
-    graph1 = graph1.resize((700, 700))
+    graph1 = graph1.resize((600, 600))
     st.image(graph1, use_column_width=False)
 
     st.markdown("The representation of painters in el Prado Museum, ignoring the pieces of art that are catalogued as anonymous, is the following:")
     graph2 =  Image.open("images/graph2.jpg")
-    graph2 = graph2.resize((700, 700))
+    graph2 = graph2.resize((600, 600))
     st.image(graph2, use_column_width=False)
 
 with oil_painting_study:
@@ -125,7 +125,7 @@ with oil_painting_study:
         st.markdown("In order to get the main color for each year, you can enter the year and the main color will appear:")
         input=st.text_input("Introduce the year in order to obtain main color used in that year:",value="1601",type="default",label_visibility="visible")
         color_code = color_functions.return_main_color(int(input))
-        st.markdown(f"For the year selected the main color code is the following:{color_code}")
+        st.markdown(f"For the year selected the main color code is the following: {color_code}")
         result = Image.new("RGBA", (100, 100), (0, 0, 0, 0))
         canvas = ImageDraw.Draw(result)
         canvas.rectangle([(100, 100), (1, 1)], fill=color_code)

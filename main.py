@@ -3,13 +3,11 @@ from PIL import Image
 import streamlit.components.v1 as components
 import codecs
 import os
-import sql.sql_queries as esecuele
 import color_functions
 import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
-import plotly.express as px
-#import sql.sql_queries 
+import plotly.express as px 
 import pandas as pd
 import numpy as np
 import color_functions
@@ -70,6 +68,15 @@ with museum_study:
     st.header("""Museum study""")
     st.markdown("El Prado Museum has one of the largests collections of Barroque, meaning that most of the pieces of art where done during the XVII century.")
     df=pd.read_csv("datasets/prado_oil.csv")
+    st.markdown("The pieces of art are split into different styles depending on the traces used in the paintings and the year when they were produced:")
+    st.markdown("- Romanesque: XI, XII, XIII")
+    st.markdown("- Gothic: XIII, XIV, XV")
+    st.markdown("- Reinassance: XVI")
+    st.markdown("- Barroque: XVII, XVIII")
+    st.markdown("- Neoclassicism: XVIII, XIX")
+    st.markdown("- Romantiscism: XIX")
+    st.markdown("- Impressionism: XIX")
+    
 
     fig=plt.figure(figsize=(5, 5))
     
@@ -82,6 +89,13 @@ with museum_study:
     ax1.grid(False)
     ax1.set_facecolor((1, 1, 1))
     ax1.set_frame_on(True)
+    plt.axvline(x = 1300, linewidth=0.5, color = 'r', label = 'Romanesque')
+    plt.axvline(x = 1500, linewidth=0.5, color = 'r', label = 'Gothic')
+    plt.axvline(x = 1600, linewidth=0.5, color = 'r', label = 'Reinassance')
+    plt.axvline(x = 1725, linewidth=0.5, color = 'r', label = 'Barroque')
+    plt.axvline(x = 1800, linewidth=0.5, color = 'r', label = 'Neoclassicism')
+    plt.axvline(x = 1850, linewidth=0.5, color = 'r', label = 'Romanticism')
+    plt.axvline(x = 1900, linewidth=0.5, color = 'r', label = 'Impressionism')
     
     fig.savefig("images/graph1.jpg")
     graph1 =  Image.open("images/graph1.jpg")

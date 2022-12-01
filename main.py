@@ -63,6 +63,10 @@ with methodology:
     st.write(taxi_data.head())
     st.markdown("My code is structured in different document, all of the .py documents.")
     st.markdown("main.py contains all the streamlit page code and color_functions.py contains all the functions that render palettes and that will be used in my page.")
+    st.markdown("The study_image function takes an image as an input and go through 3 steps:")
+    st.markdown("1. extract_colors - Extracts the color codes contained in an image and the number of pixels this color appears in. Additionally, the fucntion will have to fields that are setted: tolerance (variable that groups the colors) and limit (maximum number of colors to be extracted).")
+    st.markdown("2. render_color_platte - Gets the output from extract_colors and turns the codes into the RGB Color.")
+    st.markdown("3. overlay_palette - Overlays the inputed image together with the palette image.")
 
 with museum_study:
     st.header("""Museum study""")
